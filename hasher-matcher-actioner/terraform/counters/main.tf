@@ -14,7 +14,9 @@ resource "aws_cloudwatch_log_group" "stream_counter" {
     {
       Name = "StreamCounterLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "5aefd215-db74-4a48-9bdb-793edb58c53c"
+  })
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
@@ -36,7 +38,9 @@ resource "aws_iam_role" "ddb_stream_counter_lambda_role" {
     {
       Name = "StreamCounterLambdaRole"
     }
-  )
+    , {
+      yor_trace = "28b261b4-1e19-4871-96c1-1f990192a714"
+  })
 }
 
 resource "aws_lambda_function" "ddb_stream_counter" {
@@ -61,7 +65,9 @@ resource "aws_lambda_function" "ddb_stream_counter" {
     {
       Name = "DDBStreamCounter"
     }
-  )
+    , {
+      yor_trace = "96562ea6-8092-40fb-a300-0b79be8407ed"
+  })
 }
 
 data "aws_iam_policy_document" "stream_counter_iam_policy_document" {
@@ -93,6 +99,9 @@ resource "aws_iam_policy" "stream_counter_iam_policy" {
   name_prefix = "${var.prefix}_match_counter_iam_policy"
   description = "Permissions for Stream Counter Lambda"
   policy      = data.aws_iam_policy_document.stream_counter_iam_policy_document.json
+  tags = {
+    yor_trace = "1330679c-d10b-4cb4-919a-b5a54343825d"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "stream_counter" {

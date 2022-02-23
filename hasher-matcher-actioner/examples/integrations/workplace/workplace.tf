@@ -22,22 +22,24 @@ resource "aws_lambda_function" "integrations" {
   memory_size = 512
   # hard coded for now in lambda. Should eventually becoem terraform variables
   #environment {
-    #variables = {
-    #  API_TOKEN = var.api_token
-    #  HMA_API_GATEWAY_URL  = var.api_url
-    #  WORKPLACE_APP_SECRET = var.workplace_app_secret
-    #}
+  #variables = {
+  #  API_TOKEN = var.api_token
+  #  HMA_API_GATEWAY_URL  = var.api_url
+  #  WORKPLACE_APP_SECRET = var.workplace_app_secret
+  #}
   #}
   tags = {
-      Name = "IntegrationsFunction"
-    }
+    Name      = "IntegrationsFunction"
+    yor_trace = "cfaf192a-7fd0-411d-91d3-08657c560be9"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "integrations" {
   name              = "/aws/lambda/${aws_lambda_function.integrations.function_name}"
   retention_in_days = var.log_retention_in_days
   tags = {
-    Name = "IntegrationsLambdaLogGroup"
+    Name      = "IntegrationsLambdaLogGroup"
+    yor_trace = "8daa2234-8cc4-4519-ac55-ae5a29c899d5"
   }
 }
 
@@ -45,7 +47,8 @@ resource "aws_iam_role" "integrations" {
   name_prefix        = "${var.prefix}_integrations"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
   tags = {
-    Name = "IntegrationsLambdaRole"
+    Name      = "IntegrationsLambdaRole"
+    yor_trace = "e02a9185-760a-4c13-b2ec-c792509c96bf"
   }
 }
 
@@ -71,6 +74,9 @@ resource "aws_iam_policy" "integrations" {
   name_prefix = "${var.prefix}_api_root_role_policy"
   description = "Permissions for Integrations Lambda"
   policy      = data.aws_iam_policy_document.integrations.json
+  tags = {
+    yor_trace = "4ac6dabb-797d-4371-a0c7-d29d69c75203"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "integrations" {

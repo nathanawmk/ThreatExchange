@@ -46,7 +46,9 @@ resource "aws_dynamodb_table" "config_table" {
     {
       Name = "HMAConfig"
     }
-  )
+    , {
+      yor_trace = "4588b93a-e254-4e31-9dda-191c625e94fb"
+  })
 
 }
 
@@ -167,6 +169,9 @@ module "fetcher" {
 
 resource "aws_sns_topic" "matches" {
   name_prefix = "${var.prefix}-matches"
+  tags = {
+    yor_trace = "a48a3fb0-5020-42ff-a727-ed79e6e9e65c"
+  }
 }
 
 # Set up webapp resources (s3 bucket and cloudfront distribution)
@@ -192,6 +197,9 @@ module "webapp" {
 resource "aws_secretsmanager_secret" "hma_api_tokens" {
   name                    = local.hma_api_tokens_secret_name
   recovery_window_in_days = 0
+  tags = {
+    yor_trace = "171fcbc3-1a83-49bd-abe6-ddb5ee790288"
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "hma_api_tokens" {
@@ -230,7 +238,9 @@ resource "aws_s3_bucket" "data_bucket" {
     {
       Name = "HashingDataBucket"
     }
-  )
+    , {
+      yor_trace = "ffc45326-94bf-4ac7-9cfd-f9c3427dfa88"
+  })
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["PUT"]
@@ -261,7 +271,9 @@ resource "aws_s3_bucket" "banks_media_bucket" {
     {
       Name = "BanksMediaBucket"
     }
-  )
+    , {
+      yor_trace = "b2c43e9f-7e9a-434e-ab72-2563f8fccb5f"
+  })
 
   versioning {
     # Don't see a reason for versioning media. Everything will be keyed on uuid
@@ -315,7 +327,9 @@ resource "aws_sqs_queue" "submissions_queue_dlq" {
     {
       Name = "SubmissionDLQ"
     }
-  )
+    , {
+      yor_trace = "9b2ef7d7-ecc5-4f7c-b378-c2b899d154ff"
+  })
 }
 
 resource "aws_sqs_queue" "submissions_queue" {
@@ -333,7 +347,9 @@ resource "aws_sqs_queue" "submissions_queue" {
     {
       Name = "SubmissionsQueue"
     }
-  )
+    , {
+      yor_trace = "98a90538-562a-4340-bb3b-0e60e83a238d"
+  })
 }
 
 resource "aws_sqs_queue" "hashes_queue_dlq" {
@@ -347,7 +363,9 @@ resource "aws_sqs_queue" "hashes_queue_dlq" {
     {
       Name = "HashesDLQ"
     }
-  )
+    , {
+      yor_trace = "87e4f757-b34e-4f82-94d5-97b41919c2a5"
+  })
 }
 
 resource "aws_sqs_queue" "hashes_queue" {
@@ -365,7 +383,9 @@ resource "aws_sqs_queue" "hashes_queue" {
     {
       Name = "HashesQueue"
     }
-  )
+    , {
+      yor_trace = "f0762802-b624-45b2-8264-aee592f1b230"
+  })
 }
 
 module "hasher" {
@@ -564,6 +584,9 @@ module "actions" {
 resource "aws_secretsmanager_secret" "te_api_token" {
   name                    = local.te_api_token_secret_name
   recovery_window_in_days = 0
+  tags = {
+    yor_trace = "ea6ec269-33db-42d5-a434-cf35d4d0e98e"
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "te_api_token" {

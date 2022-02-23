@@ -37,7 +37,9 @@ resource "aws_lambda_function" "indexer" {
     {
       Name = "IndexerFunction"
     }
-  )
+    , {
+      yor_trace = "104cf65f-ab83-4329-98a2-835f4b0479b4"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "indexer" {
@@ -48,7 +50,9 @@ resource "aws_cloudwatch_log_group" "indexer" {
     {
       Name = "IndexerLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "5b44f76e-73a3-45a6-a1fb-cfbd37ff42db"
+  })
 }
 
 resource "aws_iam_role" "indexer" {
@@ -59,7 +63,9 @@ resource "aws_iam_role" "indexer" {
     {
       Name = "IndexerLambdaRole"
     }
-  )
+    , {
+      yor_trace = "bec553e8-0aa1-49ab-bfbf-1e8afa0407ce"
+  })
 }
 
 data "aws_iam_policy_document" "indexer" {
@@ -106,6 +112,9 @@ resource "aws_iam_policy" "indexer" {
   name_prefix = "${var.prefix}_indexer_role_policy"
   description = "Permissions for Indexer Lambda"
   policy      = data.aws_iam_policy_document.indexer.json
+  tags = {
+    yor_trace = "0a087d8d-e26f-47eb-8a9d-08bbe4170ec2"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "indexer" {

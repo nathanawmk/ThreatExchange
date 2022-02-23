@@ -8,7 +8,9 @@ resource "aws_sns_topic" "submit_event_notification_topic" {
     {
       Name = "SubmitEventTopic"
     }
-  )
+    , {
+      yor_trace = "9a5e5477-a915-4f70-b380-7d7e2ed78ae5"
+  })
 }
 
 resource "aws_sqs_queue" "submit_event_queue_dlq" {
@@ -21,7 +23,9 @@ resource "aws_sqs_queue" "submit_event_queue_dlq" {
     {
       Name = "SubmitEventDLQ"
     }
-  )
+    , {
+      yor_trace = "0aa5a280-a93e-447f-b57d-2c763759a592"
+  })
 }
 
 resource "aws_sqs_queue" "submit_event_queue" {
@@ -38,7 +42,9 @@ resource "aws_sqs_queue" "submit_event_queue" {
     {
       Name = "SubmitEventQueue"
     }
-  )
+    , {
+      yor_trace = "59dbac0f-da31-47d5-901f-15fde694961c"
+  })
 }
 
 resource "aws_sns_topic_subscription" "submit_event_queue" {
@@ -89,7 +95,9 @@ resource "aws_lambda_function" "submit_event_handler" {
     {
       Name = "SubmitEventFunction"
     }
-  )
+    , {
+      yor_trace = "36ef0c48-4e6f-4413-a0e2-59d6b664b52e"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "submit_event_handler" {
@@ -100,7 +108,9 @@ resource "aws_cloudwatch_log_group" "submit_event_handler" {
     {
       Name = "SubmitEventLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "b2dd575a-52b8-4377-ae7b-431b5256deef"
+  })
 }
 
 resource "aws_iam_role" "submit_event_handler" {
@@ -111,7 +121,9 @@ resource "aws_iam_role" "submit_event_handler" {
     {
       Name = "SubmitEventLambdaRole"
     }
-  )
+    , {
+      yor_trace = "64d72580-de57-45f0-9be9-e1295ecede82"
+  })
 }
 
 data "aws_iam_policy_document" "submit_event_handler" {
@@ -163,6 +175,9 @@ resource "aws_iam_policy" "submit_event_handler" {
   name_prefix = "${var.prefix}_submit_event_handler_role_policy"
   description = "Permissions for Root API Lambda"
   policy      = data.aws_iam_policy_document.submit_event_handler.json
+  tags = {
+    yor_trace = "895e5e6f-4060-4219-baec-560ad5ef1c8b"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "submit_event_handler" {

@@ -43,6 +43,9 @@ resource "aws_cognito_user_pool" "webapp_and_api_user_pool" {
   username_configuration {
     case_sensitive = false
   }
+  tags = {
+    yor_trace = "4851515c-b6f1-4295-8ad5-0fa97fadd90a"
+  }
 }
 
 resource "aws_cognito_user_pool_domain" "webapp_user_pool_domain" {

@@ -32,7 +32,9 @@ resource "aws_lambda_function" "hashing_lambda" {
     {
       Name = "HashingLambda"
     }
-  )
+    , {
+      yor_trace = "1a77c63b-0026-4f94-be65-f52f595eb40c"
+  })
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
@@ -50,6 +52,9 @@ resource "aws_iam_policy" "hashing_lambda_policy" {
   name_prefix = "${var.prefix}_hasher_policy"
   description = "Permissions for Hashing Lambda"
   policy      = data.aws_iam_policy_document.hashing_lambda.json
+  tags = {
+    yor_trace = "521a0899-1d15-40a4-bc27-77e2c261ef1a"
+  }
 }
 resource "aws_iam_role" "hashing_lambda_role" {
   name_prefix        = "${var.prefix}_hasher"
@@ -59,7 +64,9 @@ resource "aws_iam_role" "hashing_lambda_role" {
     {
       Name = "HashingLambda"
     }
-  )
+    , {
+      yor_trace = "593b291d-0bd8-41ae-9c78-84b9cb6559e8"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "hashing_logs" {
@@ -70,7 +77,9 @@ resource "aws_cloudwatch_log_group" "hashing_logs" {
     {
       Name = "HasherLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "26674ef7-9d76-4e63-bdf2-6c8ad4412073"
+  })
 }
 
 data "aws_iam_policy_document" "hashing_lambda" {

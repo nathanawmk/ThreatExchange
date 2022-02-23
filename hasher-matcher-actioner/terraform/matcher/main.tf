@@ -32,7 +32,9 @@ resource "aws_lambda_function" "matcher_lambda" {
     {
       Name = "MatchingLambda"
     }
-  )
+    , {
+      yor_trace = "aa8b989a-9046-4d75-9fbf-1718266f6b9f"
+  })
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
@@ -50,6 +52,9 @@ resource "aws_iam_policy" "matcher_lambda_policy" {
   name_prefix = "${var.prefix}_matcher_policy"
   description = "Permissions for Matching Lambda"
   policy      = data.aws_iam_policy_document.matcher_lambda.json
+  tags = {
+    yor_trace = "018ecbb9-7ed2-4c14-9718-7e29f58b34e7"
+  }
 }
 
 resource "aws_iam_role" "matcher_lambda_role" {
@@ -60,7 +65,9 @@ resource "aws_iam_role" "matcher_lambda_role" {
     {
       Name = "MatchingLambda"
     }
-  )
+    , {
+      yor_trace = "a3f83778-714d-4d71-87fd-1cf2cf635b57"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "matcher_logs" {
@@ -71,7 +78,9 @@ resource "aws_cloudwatch_log_group" "matcher_logs" {
     {
       Name = "MatcherLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "88a3a630-411f-4e72-a073-9bcd2a5b71e9"
+  })
 }
 
 data "aws_iam_policy_document" "matcher_lambda" {
