@@ -55,7 +55,9 @@ resource "aws_lambda_function" "api_root" {
     {
       Name = "RootAPIFunction"
     }
-  )
+    , {
+      yor_trace = "1bd6ff6e-c2bb-469b-a3c1-cb7a964586ac"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "api_root" {
@@ -66,7 +68,9 @@ resource "aws_cloudwatch_log_group" "api_root" {
     {
       Name = "RootAPILambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "9aeafe44-1100-40ce-93ae-a5784bbec295"
+  })
 }
 
 resource "aws_iam_role" "api_root" {
@@ -77,7 +81,9 @@ resource "aws_iam_role" "api_root" {
     {
       Name = "RootAPILambdaRole"
     }
-  )
+    , {
+      yor_trace = "7a0666fa-977a-4d06-bc35-14bda01da6fc"
+  })
 }
 
 data "aws_iam_policy_document" "api_root" {
@@ -171,6 +177,9 @@ resource "aws_iam_policy" "api_root" {
   name_prefix = "${var.prefix}_api_root_role_policy"
   description = "Permissions for Root API Lambda"
   policy      = data.aws_iam_policy_document.api_root.json
+  tags = {
+    yor_trace = "b7617d91-5928-4ad7-a3cd-94e3fea9f275"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "api_root" {
@@ -206,7 +215,9 @@ resource "aws_lambda_function" "api_auth" {
     {
       Name = "AuthAPIFunction"
     }
-  )
+    , {
+      yor_trace = "050e3b77-45c3-4b46-a1c9-88480c0114b4"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "api_auth" {
@@ -217,7 +228,9 @@ resource "aws_cloudwatch_log_group" "api_auth" {
     {
       Name = "AuthAPILambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "94efdd7d-5981-4572-b6f5-d33a9726d41c"
+  })
 }
 
 resource "aws_iam_role" "api_auth" {
@@ -228,7 +241,9 @@ resource "aws_iam_role" "api_auth" {
     {
       Name = "AuthAPILambdaRole"
     }
-  )
+    , {
+      yor_trace = "7dd82f03-4af0-4694-8774-14f1a76fa300"
+  })
 }
 
 data "aws_iam_policy_document" "api_auth" {
@@ -252,6 +267,9 @@ resource "aws_iam_policy" "api_auth" {
   name_prefix = "${var.prefix}_api_auth_role_policy"
   description = "Permissions for Auth API Lambda"
   policy      = data.aws_iam_policy_document.api_auth.json
+  tags = {
+    yor_trace = "865737a3-64dc-46b0-987f-9dd44452a57f"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "api_auth" {
@@ -280,6 +298,9 @@ resource "aws_api_gateway_rest_api" "hma_api_gw" {
   }
   policy             = length(data.aws_iam_policy_document.hma_api_gw_in_vpc) > 0 ? data.aws_iam_policy_document.hma_api_gw_in_vpc[0].json : null
   binary_media_types = ["*/*"]
+  tags = {
+    yor_trace = "22b9412b-a028-4fb1-a22b-c66f1a104ab2"
+  }
 }
 
 resource "aws_api_gateway_resource" "hma_api_gw" {
@@ -340,6 +361,9 @@ resource "aws_api_gateway_stage" "hma_api_gw" {
   deployment_id = aws_api_gateway_deployment.hma_api_gw.id
   rest_api_id   = aws_api_gateway_rest_api.hma_api_gw.id
   stage_name    = "api"
+  tags = {
+    yor_trace = "ff5b0903-7444-48da-bbb1-52063f020c99"
+  }
 }
 
 resource "aws_iam_role" "hma_api_gw" {
@@ -350,7 +374,9 @@ resource "aws_iam_role" "hma_api_gw" {
     {
       Name = "HMAAPIGatewayRole"
     }
-  )
+    , {
+      yor_trace = "687ad6cb-22de-4227-b08d-84093639177b"
+  })
 }
 
 data "aws_iam_policy_document" "hma_api_gw" {
@@ -374,6 +400,9 @@ resource "aws_iam_policy" "hma_api_gw" {
   name_prefix = "${var.prefix}_hma_api_gw_role_policy"
   description = "Permissions for HMA Rest API Gateway"
   policy      = data.aws_iam_policy_document.hma_api_gw.json
+  tags = {
+    yor_trace = "0466538b-4215-4558-8e2c-0bc658a02be6"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "hma_api_gw" {
@@ -389,7 +418,9 @@ resource "aws_cloudwatch_log_group" "hma_api_gw" {
     {
       Name = "HMAAPIGatewayLogGroup"
     }
-  )
+    , {
+      yor_trace = "e8906015-8f78-464b-8043-49196623b73b"
+  })
 }
 
 resource "aws_lambda_permission" "apigw_lambda" {
@@ -463,6 +494,9 @@ resource "aws_vpc_endpoint" "vpce" {
 
   subnet_ids         = var.vpc_subnets
   security_group_ids = var.security_groups
+  tags = {
+    yor_trace = "c8986b12-c772-4c81-b9ca-81297e7c018d"
+  }
 }
 
 resource "aws_api_gateway_rest_api_policy" "hma_api_gw" {

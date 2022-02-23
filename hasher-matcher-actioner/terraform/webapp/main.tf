@@ -8,7 +8,9 @@ resource "aws_s3_bucket" "webapp" {
     {
       Name = "WebappBucket"
     }
-  )
+    , {
+      yor_trace = "4ca4d675-17fd-42bc-8405-91fb9dbd3959"
+  })
   website {
     index_document = "index.html"
     error_document = "index.html"
@@ -99,5 +101,8 @@ resource "aws_cloudfront_distribution" "webapp" {
   }
   viewer_certificate {
     cloudfront_default_certificate = true
+  }
+  tags = {
+    yor_trace = "af0d8cf0-b80f-4708-944e-53ad1770f781"
   }
 }

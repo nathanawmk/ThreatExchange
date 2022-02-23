@@ -48,7 +48,9 @@ resource "aws_lambda_function" "submitter" {
     {
       Name = "SubmittingLambda"
     }
-  )
+    , {
+      yor_trace = "5eb63f0f-804f-4a5e-812b-3f27c13dff6c"
+  })
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
@@ -66,6 +68,9 @@ resource "aws_iam_policy" "submitter" {
   name_prefix = "${var.prefix}_submitter_policy"
   description = "Permissions for Submitting Lambda"
   policy      = data.aws_iam_policy_document.submitter.json
+  tags = {
+    yor_trace = "0f8971e7-319c-4cd1-8ffd-156efb5fc836"
+  }
 }
 
 resource "aws_iam_role" "submitter" {
@@ -76,7 +81,9 @@ resource "aws_iam_role" "submitter" {
     {
       Name = "SubmitterLambda"
     }
-  )
+    , {
+      yor_trace = "761e9a3d-7b6c-4529-a3d0-71bee1d750fd"
+  })
 }
 
 data "aws_iam_policy_document" "submitter" {

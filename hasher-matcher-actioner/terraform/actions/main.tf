@@ -17,7 +17,9 @@ resource "aws_sqs_queue" "matches_queue_dlq" {
     {
       Name = "MatchesDLQ"
     }
-  )
+    , {
+      yor_trace = "184c825c-ea56-4869-a590-f20b6b3a8228"
+  })
 }
 
 
@@ -33,7 +35,9 @@ resource "aws_sqs_queue" "matches_queue" {
   tags = merge(
     var.additional_tags,
     local.common_tags
-  )
+    , {
+      yor_trace = "6e348b2d-ac9a-4841-90b0-2d7d59ee37e6"
+  })
 }
 
 data "aws_iam_policy_document" "matches_queue" {
@@ -80,7 +84,9 @@ resource "aws_sqs_queue" "actions_queue_dlq" {
     {
       Name = "ActionsDLQ"
     }
-  )
+    , {
+      yor_trace = "36defea0-6a21-4f88-a9d7-d7d5a818a4f3"
+  })
 }
 
 
@@ -98,7 +104,9 @@ resource "aws_sqs_queue" "actions_queue" {
     {
       Name = "ActionsQueue"
     }
-  )
+    , {
+      yor_trace = "b88dd097-e130-4765-be4e-fbaa71afd95b"
+  })
 }
 
 # Set up the queue for sending messages from the action evaluator to the writebacker
@@ -113,7 +121,9 @@ resource "aws_sqs_queue" "writebacks_queue_dlq" {
     {
       Name = "WritebacksDLQ"
     }
-  )
+    , {
+      yor_trace = "b71ea39b-5160-4040-aca1-cc9d045f6882"
+  })
 }
 
 resource "aws_sqs_queue" "writebacks_queue" {
@@ -130,7 +140,9 @@ resource "aws_sqs_queue" "writebacks_queue" {
     {
       Name = "WritebacksQueue"
     }
-  )
+    , {
+      yor_trace = "5c8c1916-ab88-4fa7-873d-47bd6c738212"
+  })
 }
 
 # Lambda functions
@@ -158,6 +170,9 @@ resource "aws_lambda_function" "action_evaluator" {
       DYNAMODB_TABLE       = var.datastore.name
     }
   }
+  tags = {
+    yor_trace = "5312463a-2ac8-4b40-9050-0b321ae4dbad"
+  }
 }
 
 # Action performer performs actions decided on by the action evaluator.
@@ -180,6 +195,9 @@ resource "aws_lambda_function" "action_performer" {
       CONFIG_TABLE_NAME = var.config_table.name,
       DYNAMODB_TABLE    = var.datastore.name
     }
+  }
+  tags = {
+    yor_trace = "02ab5d06-dd57-4cea-b8f5-5e1c32e3b3cb"
   }
 }
 
@@ -205,6 +223,9 @@ resource "aws_lambda_function" "writebacker" {
 
   timeout     = 300
   memory_size = 512
+  tags = {
+    yor_trace = "a8236a91-3d70-4ab9-82e2-e1a5a8af4373"
+  }
 }
 
 # Log groups
@@ -217,7 +238,9 @@ resource "aws_cloudwatch_log_group" "action_evaluator" {
     {
       Name = "ActionEvaluatorLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "bb3bfe5e-b5b1-4f74-9893-d6aa675490cb"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "action_performer" {
@@ -228,7 +251,9 @@ resource "aws_cloudwatch_log_group" "action_performer" {
     {
       Name = "ActionPerformerLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "4308f158-5f6a-43cf-91a8-a1596c8eccd4"
+  })
 }
 
 resource "aws_cloudwatch_log_group" "writebacker" {
@@ -239,7 +264,9 @@ resource "aws_cloudwatch_log_group" "writebacker" {
     {
       Name = "WritebackerLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "7f6c3eb4-6fbe-4f06-820c-38f1e983762e"
+  })
 }
 
 # Common "assume role" policy document
@@ -260,12 +287,17 @@ data "aws_iam_policy_document" "lambda_assume_role" {
 resource "aws_iam_role" "action_evaluator" {
   name_prefix        = "${var.prefix}_action_evaluator"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
-  tags               = var.additional_tags
+  tags = merge(var.additional_tags, {
+    yor_trace = "3248a9a2-6c71-4c20-847f-289bd4f9998d"
+  })
 }
 
 resource "aws_iam_policy" "action_evaluator" {
   name_prefix = "${var.prefix}_action_evaluator_role_policy"
   policy      = data.aws_iam_policy_document.action_evaluator.json
+  tags = {
+    yor_trace = "bf562cfd-3cbc-43a2-8d3c-9fd7c5188c71"
+  }
 }
 
 data "aws_iam_policy_document" "action_evaluator" {
@@ -318,12 +350,17 @@ resource "aws_iam_role_policy_attachment" "action_evaluator" {
 resource "aws_iam_role" "action_performer" {
   name_prefix        = "${var.prefix}_action_performer"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
-  tags               = var.additional_tags
+  tags = merge(var.additional_tags, {
+    yor_trace = "b998709a-780f-45d3-9128-8fcc5072f377"
+  })
 }
 
 resource "aws_iam_policy" "action_performer" {
   name_prefix = "${var.prefix}_action_performer_role_policy"
   policy      = data.aws_iam_policy_document.action_performer.json
+  tags = {
+    yor_trace = "802fba10-5392-431b-9967-d83403f77904"
+  }
 }
 
 data "aws_iam_policy_document" "action_performer" {
@@ -372,12 +409,17 @@ resource "aws_iam_role_policy_attachment" "action_performer" {
 resource "aws_iam_role" "writebacker" {
   name_prefix        = "${var.prefix}_writebacker"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
-  tags               = var.additional_tags
+  tags = merge(var.additional_tags, {
+    yor_trace = "fbdf6263-e483-48e5-a338-622feaf659bd"
+  })
 }
 
 resource "aws_iam_policy" "writebacker" {
   name_prefix = "${var.prefix}_writebacker_role_policy"
   policy      = data.aws_iam_policy_document.writebacker.json
+  tags = {
+    yor_trace = "cf583d15-a722-4ea5-a6cd-885196e90b4f"
+  }
 }
 
 data "aws_iam_policy_document" "writebacker" {

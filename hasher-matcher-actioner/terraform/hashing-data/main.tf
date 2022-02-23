@@ -63,7 +63,9 @@ resource "aws_s3_bucket_object" "threat_exchange_data" {
     {
       Name = "ThreatExchangeDataFolder"
     }
-  )
+    , {
+      yor_trace = "c553e1ad-f8f7-422a-9e6f-6f0521ff653b"
+  })
 }
 
 resource "aws_sns_topic" "threat_exchange_data" {
@@ -73,7 +75,9 @@ resource "aws_sns_topic" "threat_exchange_data" {
     {
       Name = "ThreatExchangeDataFolderUpdated"
     }
-  )
+    , {
+      yor_trace = "c58cb56d-1f67-4938-b018-a089a0404a8f"
+  })
 }
 
 data "aws_iam_policy_document" "threat_exchange_data" {
@@ -110,7 +114,9 @@ resource "aws_s3_bucket_object" "index" {
     {
       Name = "IndexesFolder"
     }
-  )
+    , {
+      yor_trace = "b4cba0e3-5365-4fa3-9dd4-64c10d7e2ef0"
+  })
 }
 
 # Image File Notifications
@@ -124,7 +130,9 @@ resource "aws_s3_bucket_object" "images" {
     {
       Name = "ImagesContentFolder"
     }
-  )
+    , {
+      yor_trace = "61b75f0e-0ba3-487d-9197-6b1f58ff5097"
+  })
 }
 
 resource "aws_sns_topic" "image_notification_topic" {
@@ -134,6 +142,8 @@ resource "aws_sns_topic" "image_notification_topic" {
     {
       Name = "ImagesContentFolderUpdated"
     }
-  )
+    , {
+      yor_trace = "e54a2e77-213e-4e39-baa7-e78668e341d0"
+  })
 }
 

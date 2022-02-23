@@ -43,7 +43,9 @@ resource "aws_lambda_function" "fetcher" {
     {
       Name = "FetcherFunction"
     }
-  )
+    , {
+      yor_trace = "2a96d67c-1869-4fc7-a10c-4f5abf43e0c0"
+  })
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
@@ -62,7 +64,9 @@ resource "aws_cloudwatch_log_group" "fetcher" {
     {
       Name = "FetcherLambdaLogGroup"
     }
-  )
+    , {
+      yor_trace = "82a087bf-17e9-47cf-9350-1e8d91bf1687"
+  })
 }
 
 resource "aws_iam_role" "fetcher" {
@@ -73,7 +77,9 @@ resource "aws_iam_role" "fetcher" {
     {
       Name = "FetcherLambdaRole"
     }
-  )
+    , {
+      yor_trace = "34420625-771f-4732-a1b7-cc12c15491b2"
+  })
 }
 
 data "aws_iam_policy_document" "fetcher" {
@@ -124,6 +130,9 @@ resource "aws_iam_policy" "fetcher" {
   name_prefix = "${var.prefix}_fetcher_role_policy"
   description = "Permissions for Fetcher Lambda"
   policy      = data.aws_iam_policy_document.fetcher.json
+  tags = {
+    yor_trace = "27192473-7559-4776-9376-583843b44b0d"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "fetcher" {
@@ -145,6 +154,9 @@ resource "aws_cloudwatch_event_rule" "recurring_fetch" {
   description         = "Fetch updates from ThreatExchange on a regular cadence"
   schedule_expression = "rate(${var.fetch_frequency})"
   role_arn            = aws_iam_role.fetcher_trigger.arn
+  tags = {
+    yor_trace = "8bd31713-98e8-47c8-9209-2cf0f371ea4d"
+  }
 }
 
 # Role for the trigger
@@ -157,7 +169,9 @@ resource "aws_iam_role" "fetcher_trigger" {
     {
       Name = "FetcherLambdaTriggerRole"
     }
-  )
+    , {
+      yor_trace = "e83dd11b-518d-47cf-8871-486295283a9f"
+  })
 }
 
 # Assume policy for trigger role allowing events.amazonaws.com to assume the role
@@ -191,6 +205,9 @@ resource "aws_iam_policy" "fetcher_trigger" {
   name_prefix = "${var.prefix}_fetcher_trigger_role_policy"
   description = "Permissions for Recurring Fetcher Trigger"
   policy      = data.aws_iam_policy_document.fetcher_trigger.json
+  tags = {
+    yor_trace = "2d555e20-e1d5-4523-bf92-77cc1e20ce47"
+  }
 }
 
 # Attach a permission policy to the fetech trigger role

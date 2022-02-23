@@ -42,6 +42,8 @@ module "vpc_eg" {
   tags = merge(var.additional_tags, {
     Terraform   = "true"
     Environment = "dev"
+    }, {
+    yor_trace = "8c9c17f7-392f-4c40-8983-837073fd9d0d"
   })
 }
 
@@ -70,6 +72,9 @@ resource "aws_ec2_client_vpn_endpoint" "eg" {
 
   connection_log_options {
     enabled = false
+  }
+  tags = {
+    yor_trace = "e60a9be7-4784-4447-b7fc-d492abc5b9ce"
   }
 }
 

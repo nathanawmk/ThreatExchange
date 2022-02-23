@@ -73,7 +73,9 @@ resource "aws_dynamodb_table" "hma_datastore" {
     {
       Name = "HMADataStore"
     }
-  )
+    , {
+      yor_trace = "0455cfa0-ded9-44fe-bf71-d0b7aa2ff37f"
+  })
 
   lifecycle {
     # To prevent execution of plans which would cause this datastore to get
@@ -135,7 +137,9 @@ resource "aws_dynamodb_table" "hma_banks" {
     {
       Name = "HMABanks"
     }
-  )
+    , {
+      yor_trace = "9afc4fc2-b054-4a82-ab33-988680ac10dd"
+  })
 
   lifecycle {
     # To prevent execution of plans which would cause this datastore to get
@@ -180,5 +184,8 @@ resource "aws_dynamodb_table" "hma_counts" {
   attribute {
     name = "SK"
     type = "S"
+  }
+  tags = {
+    yor_trace = "aaa4d917-5382-4ee3-bc62-aeccbc9d2c8e"
   }
 }
